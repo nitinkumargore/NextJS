@@ -1,32 +1,35 @@
 import { useRouter } from "next/router";
 import { Inter } from "next/font/google";
-import Image from "next/image";
 const inter = Inter({ subsets: ["latin"] });
 
-import { useState, useEffect } from 'react';
 import Link from "next/link";
 
-export default function Details(){
+const BASE_API_PATH = 'http://localhost:3010';
 
-    const {query:{id}} = useRouter();
-    const BASE_API_PATH = 'http://localhost:3010';
-    const [pokemon, setPokemon] = useState({});
-  
-    useEffect(()=>{
-        async function getPokemon() {
-            try{
-            const resp = await fetch(BASE_API_PATH+`/assets/pokemon/${id}.json`);
-            setPokemon(await resp.json());
-            }catch(e){
-            console.log(`Error in fetching ${id}.json`);
-            }
-        }
-        if(id){
-          getPokemon();
-        }
-    },[id]);
+export async function getStaticPaths(){
+    const resp = await fetch(BASE_API_PATH+'/assets/index.json');
+    const pokemon = await resp.json();
+    const paths = pokemon.map((p)=>{
+        return {params:{id :  p.id.toString()}}
+    });
 
+    return{ paths, fallback:false }
+}
 
+export async function getStaticProps({params}){
+    console.log('In getStaticProps and params=>',params);
+    const resp = await fetch(BASE_API_PATH+`/assets/pokemon/${params.id}.json`);
+    return {props:{
+        pokemon: await resp.json()
+    }}
+}
+export default function Details({pokemon}){
+
+    const router = useRouter();
+    if(router.isFallback){
+        return <div>Loading...</div>
+    }
+    
     return(
         <div>
             {pokemon?
@@ -46,7 +49,7 @@ export default function Details(){
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {pokemon.stats?.map((p, i)=>
+                                    {pokemon.stats?.map((p,i)=>
                                         (<tr key={p.name+'_'+i}>
                                             <td className="text-left">{p.name}</td>
                                             <td className="text-center">{p.value}</td>

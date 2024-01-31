@@ -35,8 +35,8 @@ export default function Details({pokemon}){
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {pokemon.stats?.map((p)=>
-                                        (<tr>
+                                    {pokemon.stats?.map((p, i)=>
+                                        (<tr key={p.name+'_'+i}>
                                             <td className="text-left">{p.name}</td>
                                             <td className="text-center">{p.value}</td>
                                         </tr>))
