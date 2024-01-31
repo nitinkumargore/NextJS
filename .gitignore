@@ -3,6 +3,8 @@
 # dependencies
 /pokemon-express-server/node_modules/
 /pokemon-nextjs-CSR/node_modules/
+/pokemon-nextjs-SSR/node_modules/
+/pokemon-nextjs-SSG/node_modules/
 /node_modules
 /.pnp
 .pnp.js
@@ -13,6 +15,8 @@
 
 # next.js
 /pokemon-nextjs-CSR/.next/
+/pokemon-nextjs-SSR/.next/
+/pokemon-nextjs-SSG/.next/
 /.next/
 /out/
 
