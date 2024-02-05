@@ -19,9 +19,12 @@ export async function getStaticPaths(){
 export async function getStaticProps({params}){
     console.log('In getStaticProps and params=>',params);
     const resp = await fetch(BASE_API_PATH+`/assets/pokemon/${params.id}.json`);
-    return {props:{
-        pokemon: await resp.json()
-    }}
+    return {
+        props:{
+            pokemon: await resp.json()
+        },
+        // revalidate: 30 //revalidate the page after every 30 seconds and regenerate if data has changed.
+    }
 }
 export default function Details({pokemon}){
 
@@ -41,6 +44,7 @@ export default function Details({pokemon}){
                         </div>
                         <div>
                             <div className="font-bold text-xl">{pokemon.name}</div>
+                            <div>{pokemon.type.toString().replaceAll(',',', ')}</div>
                             <table>
                                 <thead>
                                     <tr>
