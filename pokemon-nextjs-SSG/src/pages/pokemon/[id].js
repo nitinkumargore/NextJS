@@ -26,6 +26,7 @@ export async function getStaticProps({params}){
         // revalidate: 30 //revalidate the page after every 30 seconds and regenerate if data has changed.
     }
 }
+
 export default function Details({pokemon}){
 
     const router = useRouter();
