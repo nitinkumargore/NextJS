@@ -37,7 +37,10 @@ export default function Details(){
                             <img className="w-80" src={BASE_API_PATH+'/assets/'+pokemon.image}/>    
                         </div>
                         <div>
-                            <div className="font-bold text-xl">{pokemon.name}</div>
+                            <div>
+                                <div className="font-bold text-xl">{pokemon.name}</div>
+                                <div>{pokemon?.type?.toString().replaceAll(',',', ')}</div>
+                            </div>
                             <table>
                                 <thead>
                                     <tr>
